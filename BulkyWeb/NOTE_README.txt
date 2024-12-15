@@ -1,4 +1,5 @@
 ﻿
+1. Khi Find, Get thì nên kiểm tra xem có bằng null không? 
 
 
 +----------LUÔN LUÔN NHỚ------------------------------------ Bất cứ khi nào cần cập nhật thứ gì vào DB ta đều cần thêm 1 migration - "add-migration ..." ---------------+
@@ -10,7 +11,7 @@
 	- Chọn Nuget Package Manager
 	- Chọn Package Manager Console 
 	- Hiện ra cửa sổ Package Manager Console 
-	- Nhập updata-database 
+	- Nhập update-database 
 	- Hiển thị thông báo "No migrations were applied. The database is already up to date" --> Đã tạo DB thành công 
 
 
@@ -166,7 +167,7 @@
 
 16. Tải Ảnh 
 	- Tạo folder images ở wwwroot 
-	- Tạo folder images/product  
+	- Tạo folder product là con của images  
 	- Tạo 1 biến IWebHostEnvironment _webHostEnvironment dùng để cung cấp thông tin về môi trường lưu trữ ứng dụng web (hosting environment)
 		+ WebRootPath: Đường dẫn đến thư mục wwwroot của ứng dụng, nơi chứa các tài nguyên tĩnh (CSS, JavaScript, hình ảnh, ...)
 
