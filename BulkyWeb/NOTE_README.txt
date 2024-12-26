@@ -180,3 +180,92 @@
 	phải thực hiện truy vấn thủ công (join).
 
 
+19. Scaffold Identity 
+	- Scaffold Identity là một tính năng cho phép bạn tạo các tệp mã nguồn mặc định liên quan đến Identity (hệ thống quản lý xác thực và phân
+	quyền) để tùy chỉnh và mở rộng tính năng đăng nhập, đăng ký, quản lý tài khoản người dùng, .... 
+	
+	- Identity trong ASP.NET Core là một framework quản lý các chức năng xác thực (authentication) và phân quyền (authorization) cho ứng dụng
+	web. Bằng cách "scaffold", bạn có thể tạo mã nguồn mà ASP.NET Core Identity sử dụng và điều chỉnh nó theo nhu cầu của mình.
+
+	- Trong ASP.NET Core, scaffolding là tính năng tự động tạo các tệp mã nguồn cần thiết cho một phần chức năng cụ thể, như:
+		+ Controllers: Tự động tạo Controller để xử lý các yêu cầu HTTP.
+		+ Views: Tạo các trang giao diện dựa trên model (ví dụ như Create, Edit, Delete, Details).
+		+ Models: Tạo các lớp mô hình dữ liệu để tương tác với cơ sở dữ liệu.
+		+ Identity: Tạo các trang và logic liên quan đến quản lý người dùng (đăng nhập, đăng ký, đổi mật khẩu).
+
+	- public class ApplicationDbContext : IdentityDbContext chuyển từ kế thừa DbContext sang IdentityDbContext 
+	
+	1. chọn Scaffold ở bulkyWeb rồi chọn vào mục Identity 
+	2. chọn ApplicationDbContext ở mục DbContext class và chọn Override all files
+	3. Sau khi thêm, bấm chạy project thì sẽ xuất hiện 1 lỗi là "Some services are not able to
+	be constructed (Error while validating thẻ service ...)...." 
+		- Bạn hãy thêm Generic type <IdentityUser> vào IdentityDbContext
+		- Xóa file BulkyWeb\Areas\Identity\Data\ApplicationDbContext.cs
+
+
+	- Luôn phải Xác thực(Authentication) rồi mới Ủy quyền(Authorization)
+		+ Thêm app.UseAuthentication(); vào program.cs 
+
+**-Authentication-*********************************************************************************************************************************************************
+		
+	- Add Identity Tables(Bảng danh tính của người dùng)
+		+ Để dùng được các trang Razor thì nên đăng ký thêm builder.Services.AddRazorPages() và app.MapRazorPages();
+		+ add-migration addIdentityTables để tạo bảng lưu trữ dữ liệu người dùng(AspNetUsers) và các bảng liên quan 
+	
+	- Khi tạo tự động sẽ có các thuộc tính không cần thiết được tạo và chưa đúng với yêu cầu của mình nên ta cần sửa đổi lại
+		+ Tạo thêm class ApplicationUser ở Bulky.Models
+		+ add-migration ExtendIdentityUser - Ghi vào bảng AspNetUsers các thuộc tính mà ta yêu cầu đối với User
+		+ update-database :>>>>>>>
+		+ Trong bảng AspNetUsers sẽ có thuộc tính "Discriminator": nó được sử dụng để phân biệt các loại thực thể (entities)
+		khác nhau trong một bảng duy nhất.
+		+ Thuộc tính "Discriminator" có giá trị mặc định là IdentityUser, nhưng ở đây ta đã cho ApplicationUser kế thừa IdentityUser
+		và trong Register.cshtml.cs có 1 hàm CreateUser với kiểu trả về là IdentityUser. Ta nên đổi kiểu trả về lại thành ApplicationUser
+
+	- Khi tạo mới 1 user thì user đó vẫn chỉ là 1 user bình thường, chưa được phân quyền. Vì vậy gán quyền hoặc vai trò (roles) cho 
+	người dùng mới ngay sau khi họ đăng ký tài khoản. 
+
+	- Ta cần tạo các Role ở trong file Bulky.Unitily\SD.cs
+	- Khi đăng ký tài khoản thì ta cần gán role cho user đó. Sau khi đăng ký xong thì ta cần EmailSender để gửi email xác nhận đăng ký cho
+	user đó, nhưng ở đây chưa có EmailSender nên ta phải tạo thêm 1 class EmailSender impelement IEmailSender 
+		+ Sau đó ta cần đăng ký EmailSender vào Service Container 
+		+ Ngoài ra thì ta cần add thêm AddDefaultTokenProviders() bởi vì ta muốn Xác nhận Email (Email Confirmation). Nếu bạn muốn yêu cầu 
+		người dùng xác nhận email sau khi đăng ký, bạn cần token để tạo liên kết xác nhận. Điều này yêu cầu cấu hình Token Provider mặc định
+	
+**-Authorization-*********************************************************************************************************************************************************
+	- Với user là customer thì giao diện không có phần quản lý Category, Product ... Nên ta cần điều kiện hiển thị dropdown trong _Layout
+		+ Đảm bảo chỉ có admin mới có quyền thấy giao diện quản lý
+		+ Thêm [Authorize(Roles = SD.Role_Admin)] vào Controller của admin
+		+ @if(User.IsInRole(SD.Role_Admin)) 
+
+	- Bên cạnh đó, ta cần thêm ConfigureApplicationCookie() ở trang program
+		+ CHỈ CÓ THỂ THÊM COOLIE SAU KHI THÊM DANH TÍNH
+		+ Cookie này lưu trữ thông tin phiên đăng nhập và các thiết lập liên quan đến hành vi đăng nhập, đăng xuất, và quyền truy cập
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

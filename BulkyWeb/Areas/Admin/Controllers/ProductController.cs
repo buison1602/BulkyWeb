@@ -1,14 +1,18 @@
 ﻿using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
 using Bulky.Models.ViewModels;
+using Bulky.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
+using System.Numerics;
 
 
 namespace BulkyWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -82,11 +86,11 @@ namespace BulkyWeb.Areas.Admin.Controllers
                     if (!string.IsNullOrEmpty(productVM.Product.ImageUrl))
                     {
                         // delete the old image
-                        var oldTmagePath = Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
+                        var oldImagePath = Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
 
-                        if (System.IO.File.Exists(oldTmagePath))
+                        if (System.IO.File.Exists(oldImagePath))
                         {
-                            System.IO.File.Delete(oldTmagePath);
+                            System.IO.File.Delete(oldImagePath);
                         }
                     }
 

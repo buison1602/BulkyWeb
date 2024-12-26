@@ -1,22 +1,29 @@
 ﻿using Bulky.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bulky.DataAccess.Data
 {
-    public class ApplicationDbContext : DbContext
+   public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
         {
-
+            
         }
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Company> Company { get; set; }
 
 
         // Thêm dữ liệu vào bảng 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Category>().HasData(
                     new Category { Id = 1, Name = "1", DisplayOrder = 1 },
                     new Category { Id = 2, Name = "1", DisplayOrder = 2 },
