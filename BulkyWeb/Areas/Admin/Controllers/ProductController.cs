@@ -118,11 +118,11 @@ namespace BulkyWeb.Areas.Admin.Controllers
             else
             {
                 productVM.CategoryList = _unitOfWork.Category
-                .GetAll().Select(u => new SelectListItem
-                {
-                    Text = u.Name,
-                    Value = u.Id.ToString(),
-                });
+                    .GetAll().Select(u => new SelectListItem
+                    {
+                        Text = u.Name,
+                        Value = u.Id.ToString(),
+                    });
                 return View(productVM);
             }
         }

@@ -242,9 +242,19 @@
 		+ Cookie này lưu trữ thông tin phiên đăng nhập và các thiết lập liên quan đến hành vi đăng nhập, đăng xuất, và quyền truy cập
 
 
-
-
-
+20. Company 
+	- Tạo tác chức năng CRUD cho company
+	- Khi người dùng đăng ký, ta phải chỉ định người dùng đó thuộc về 1 công ty(company) nào đó. Để làm được điều đó, ta cần thêm 1 khóa ngoại
+	cho người dùng của mình
+	- Thêm CompanyID cho ApplicationUser
+	- Hiển thị Company Dropdown 
+		+ Thêm IUnitOfWork vào trang register.cshtml.cs
+		+ Thêm thuộc tính vào class InputModel
+		+ Tạo CompanyList trong OnGetAsync()
+		+ Thêm <select></select> trong register.cshtml
+		+ Ta nên hiển thị ra dropdown Company khi Role == "Company" nên cần:
+			. Set display: none cho thẻ select
+			. Thêm phần js để set lại giá trị cho display
 
 
 

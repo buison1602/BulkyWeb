@@ -37,7 +37,9 @@ namespace BulkyWeb
             //          + Xác nhận tài khoản thông qua email hoặc SMS.
             //          + Đặt lại mật khẩu.
             //          + Xác thực đa yếu tố(Two - Factor Authentication).
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => 
+                options.SignIn.RequireConfirmedAccount = true
+                ).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
 
             // CHỈ CÓ THỂ THÊM COOKIE SAU KHI THÊM DANH TÍNH

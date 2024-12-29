@@ -12,10 +12,13 @@ namespace Bulky.DataAccess.Data
             
         }
 
+        // Định nghĩa các bảng (hoặc tập hợp thực thể) trong cơ sở dữ liệu bằng cách sử dụng DbSet
+        // Mỗi DbSet đại diện cho một bảng trong cơ sở dữ liệu và cung cấp khả năng truy vấn hoặc thao tác dữ liệu trong bảng đó
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Company> Company { get; set; }
+
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
 
         // Thêm dữ liệu vào bảng 
@@ -114,6 +117,39 @@ namespace Bulky.DataAccess.Data
                     Price100 = 20,
                     CategoryId = 3,
                     ImageUrl = ""
+                }
+                );
+
+            modelBuilder.Entity<Company>().HasData(
+                new Company
+                {
+                    Id = 1,
+                    Name = "Company 1",
+                    StreetAddress = "123 Main St",
+                    City = "New York",
+                    State = "NY",
+                    PostalCode = "10000",
+                    PhoneNumber = "1234567890"
+                },
+                new Company
+                {
+                    Id = 2,
+                    Name = "Company 2",
+                    StreetAddress = "456 Main St",
+                    City = "New York",
+                    State = "NY",
+                    PostalCode = "10000",
+                    PhoneNumber = "1234567890"
+                },
+                new Company
+                {
+                    Id = 3,
+                    Name = "Company 3",
+                    StreetAddress = "789 Main St",
+                    City = "New York",
+                    State = "NY",
+                    PostalCode = "10000",
+                    PhoneNumber = "1234567890"
                 }
                 );
         }
