@@ -19,9 +19,14 @@ namespace Bulky.Models
         public string? City { get; set; }
         public string? State { get; set; }
         public string? PostalCode { get; set; }
-        public int? CompanyId { get; set; }
-        [ForeignKey("CompanyId")]
-        [ValidateNever]
-        public Company? Company { get; set; }
+        public int? CompanyId { get; set; } // Dùng làm khóa ngoại kết nối với bảng Company.
+        [ForeignKey("CompanyId")] // Xác định CompanyId là khóa ngoại và mối quan hệ giữa
+                                  // ApplicationUser và Company
+        [ValidateNever] // Bỏ qua quá trình kiểm tra tính hợp lệ (validation) của thuộc tính
+                        // Company trong quá trình binding dữ liệu từ client
+        public Company? Company { get; set; } // - Đây là thuộc tính điều hướng (navigation
+                                              // property) để thiết lập mối quan hệ với thực thể Company 
+                                              // - Cho phép truy cập thông tin chi tiết của thực thể Company
+                                              // tương ứng với CompanyId mà không cần thực hiện thủ công một truy vấn khác
     }
 }

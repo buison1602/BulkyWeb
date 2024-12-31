@@ -1,6 +1,8 @@
 using System.Diagnostics;
+using System.Security.Claims;
 using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BulkyWeb.Areas.Customer.Controllers
@@ -25,8 +27,48 @@ namespace BulkyWeb.Areas.Customer.Controllers
 
         public IActionResult Details(int productId)
         {
-            Product product = _unitOfWork.Product.Get(u => u.Id == productId, includeProperties: "Category");
-            return View(product);
+            ShoppingCart cart = new ShoppingCart()
+            {
+                Product = _unitOfWork.Product.Get(u => u.Id == productId, includeProperties: "Category"),
+                Count = 1,
+                ProductId = productId
+            };
+
+            return View(cart);
+        }
+
+        [HttpPost]
+        [Authorize] // Yêu cầu user đăng nhập, không cần biết có Role là gì 
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
+            // User.Identity: Thuộc tính này chứa thông tin về danh tính của người dùng hiện tại
+            //                ASP.NET sẽ tự động gán danh tính của họ vào User.Identity
+            // ClaimsIdentity: lưu trữ thêm các claim(các thông tin như ID, email, quyền hạn, vai trò, ...)
+            // ClaimTypes.NameIdentifier: tên định danh chuẩn mà ASP.NET sử dụng để lưu trữ thông tin về ID user.
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.Get(u => 
+                u.ApplicationUserId == userId &&
+                u.ProductId == shoppingCart.ProductId);
+            shoppingCart.ApplicationUserId = userId;
+
+            if (cartFromDb != null) 
+            {
+                // Shopping cart exists
+                cartFromDb.Count += shoppingCart.Count;
+                _unitOfWork.ShoppingCart.Update(cartFromDb);
+            }
+            else
+            {
+                // add cart record
+                _unitOfWork.ShoppingCart.Add(cartFromDb);
+            }
+            TempData["success"] = "Cart updated successfully";
+
+            _unitOfWork.Save();
+
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()

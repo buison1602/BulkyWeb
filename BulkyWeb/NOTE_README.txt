@@ -246,7 +246,7 @@
 	- Tạo tác chức năng CRUD cho company
 	- Khi người dùng đăng ký, ta phải chỉ định người dùng đó thuộc về 1 công ty(company) nào đó. Để làm được điều đó, ta cần thêm 1 khóa ngoại
 	cho người dùng của mình
-	- Thêm CompanyID cho ApplicationUser
+	- Thêm CompanyId cho ApplicationUser
 	- Hiển thị Company Dropdown 
 		+ Thêm IUnitOfWork vào trang register.cshtml.cs
 		+ Thêm thuộc tính vào class InputModel
@@ -257,10 +257,25 @@
 			. Thêm phần js để set lại giá trị cho display
 
 
+21. Shopping Cart - Giỏ hàng 
+	- Tạo class ShoppingCart trong Model
+	- Thêm DbSet cho ApplicationDbContext
+	- add-migration AddShoppingCartToDb
+	- Thêm ShoppingCart vào Repository, UnitOfWork
 
+	- Tạo thêm IApplicationUser trong IRepository
 
+	- Model for Details Page(BulkyWeb\Areas\Customer\Views\Home\Details.cshtml)
+	- Khi user click vào AddToCart(Tức là mua hàng) thì phải lấy UserId gán cho ApplicationUserId của shoppingCart
+		+ Có trường hợp cùng 1 người, mua cùng 1 món hàng nhiều lần. Lúc này ta cần phải cộng dồn biến Count lại với nhau 
+		+ Khi bỏ lệnh _unitOfWork.ShoppingCart.Update(cartFromDb); mà record trong database vẫn được cập nhật, điều này 
+		thường xảy ra do Entity Framework (EF) Change Tracker tự động theo dõi các thay đổi trên thực thể (Entity) được 
+		lấy từ database. --> Đọc thêm về Tracker 
 
-
+	- Tạo view cho cart
+		+ Nhớ thêm Area("customer")
+		+ Thêm hành động cho các nút tăng giảm số lượng hàng và xóa order
+		+ Thêm View cho Summary 
 
 
 
