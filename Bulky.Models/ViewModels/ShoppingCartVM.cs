@@ -11,7 +11,6 @@ namespace Bulky.Models.ViewModels
         // Danh sách các giỏ hàng
         public IEnumerable<ShoppingCart> ShoppingCartList { get; set; }
 
-        // Tổng số đơn đặt hàng
-        public double OrderTotal { get; set; }
+        public OrderHeader OrderHeader { get; set; } 
     }
 }

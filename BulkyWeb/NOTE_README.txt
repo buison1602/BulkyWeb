@@ -278,6 +278,12 @@
 		+ Thêm View cho Summary 
 
 
+22. Order Confrimation(Xác nhận đơn hàng)
+	- Tạo class OrderHeader và OrderDetails và add chúng vào Repository 
+	- Summary GET Action Method: lấy data để truyền vào View Summary
+
+	- Thêm Order Status managent vào SD.cs
+	- SummaryPOST thêm httpPost cho Summary()
 
 
 
