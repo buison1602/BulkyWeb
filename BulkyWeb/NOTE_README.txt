@@ -286,6 +286,60 @@
 	- SummaryPOST thêm httpPost cho Summary()
 
 
+23. Order Manager 
+	- Tạo Order Controller ở Admin Controller
+	- Tạo OrderVM trong Bulky.Models.ViewModels
+	- Tạo order.js 
+	- Tạo view Index 
+		+ asp-route-status: 
+	- Tạo các Action cho từng status ở View Index
+	- Thêm filter dựa trên status ở func GetAll() trong OrderController
+		+ Tức là ứng với mỗi status thì sẽ hiển thị ra Order có trạng thái tương ứng 
+	- Sửa lại order.js
+		+ Gọi func getall và status
+		+ thêm tham số status vào func loadDataTable() 
+
+	- Tạo Get Action cho Order details
+		+ Hiển thị thông tin lên các thẻ input 
+		+ Phương thức submit có nhiều hành động khác nhau do ở Details.cshtml có nhiều nút.
+		Ứng với mỗi nút(input submit) ta sẽ có 1 asp-action="" khác nhau 
+			. VD: <input type="submit" asp-action="UpdateOrderDetail" value="Update Order Details" />
+
+	- Chỉ có Admin hoặc Employee mới có quyền thấy tất cả các Order còn mỗi User họ chỉ nhìn thấy order
+	của họ thôi. Vì vậy ta cần kiểm tra Role của người dùng trước khi lấy ra danh sách các orderHeader
+	trong func GetAll
+
+	- Thực hiện các action ứng với mỗi button trong Details.cshtml
+		+ UpdateOrderDetail
+		+ StartProcessing
+		+ ShipOrder
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

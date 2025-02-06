@@ -133,6 +133,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
 
         public IActionResult OrderConfirmation(int id)
         {
+            // không sử dụng Striper nên logic chưa đc thực hiện
             return View(id);
         }
 
