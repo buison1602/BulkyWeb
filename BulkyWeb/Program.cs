@@ -52,6 +52,21 @@ namespace BulkyWeb
                 options.LogoutPath = $"/Identity/Account/Logout";
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
+            builder.Services.AddAuthentication().AddFacebook(options =>
+            {
+                options.AppId = "579749481720878";
+                options.AppSecret = "01d48774f0a40240b81bcb59f2391cc8";
+            });
+
+
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = System.TimeSpan.FromMinutes(100);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
 
             // Đăng ký dịch vụ Rezor vào Dependency Injection. Vì khi add Scaffolded Item, các file tự động được tạo thêm là RezorPage
             // Mà tại program.cs chỉ hỗ trợ cho MVC nên ta phải đăng ký dịch vụ Razor :>>>>>>>>>> 
@@ -61,6 +76,8 @@ namespace BulkyWeb
             builder.Services.AddScoped<IEmailSender, EmailSender>();
 
             var app = builder.Build();
+
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -76,6 +93,7 @@ namespace BulkyWeb
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSession();
 
             // - app.MapRazorPages() ánh xạ các Razor Pages (.cshtml) thành các endpoint HTTP để ứng dụng xử lý
             // được các yêu cầu đến các tệp Razor Page.

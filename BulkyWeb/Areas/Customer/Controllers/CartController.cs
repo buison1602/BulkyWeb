@@ -19,6 +19,8 @@ namespace BulkyWeb.Areas.Customer.Controllers
         {
             _unitOfWork = unitOfWork;
         }
+
+
         public IActionResult Index()
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
@@ -133,6 +135,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
 
         public IActionResult OrderConfirmation(int id)
         {
+            HttpContext.Session.Clear();
             // không sử dụng Striper nên logic chưa đc thực hiện
             return View(id);
         }
@@ -151,10 +154,12 @@ namespace BulkyWeb.Areas.Customer.Controllers
 
         public IActionResult Minus(int cardId)
         {
-            var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cardId);
+            var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cardId, tracked: true);
             if(cartFromDb.Count <= 1)
             {
                 // remote that from cart
+                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart
+                    .GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
                 _unitOfWork.ShoppingCart.Remote(cartFromDb);
             }
             else
@@ -169,11 +174,13 @@ namespace BulkyWeb.Areas.Customer.Controllers
 
         public IActionResult Remove(int cardId)
         {
-            var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cardId);
-
+            var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cardId, tracked : true);
+            
+            HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart
+                .GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
+            
             _unitOfWork.ShoppingCart.Remote(cartFromDb);
             _unitOfWork.Save();
-
             return RedirectToAction(nameof(Index));
         }
 

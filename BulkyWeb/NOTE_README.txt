@@ -315,8 +315,36 @@
 		+ ShipOrder
 
 
+24. Advance concepts
+	- Authorization: thêm quyền cho các Controller
+	- Session: Lưu trữ thông tin trên server 
+		+ Đầu tiên phải thêm bộ nhớ Cach phân tán ở Program.cs
+		+ Sau đó mới thêm phiên(Session)
+		+ Bất cứ khi nào thêm mặt hàng mới vào giỏ hàng, ta sẽ thêm giá trị đó vào Session 
+		+ Thêm @using Microsoft.AspNetCore.Http
+			@inject IHttpContextAccessor HttpContextAccessor vào _Layout.cshtml
+		+ Gán giá trị cho SD.SessionCart mỗi khi thêm hàng vào giỏ hàng hoặc khi đăng nhập 
 
+		+ Sau khi LOGOUT thì ta cần phải xóa Session hay xóa giỏ hàng đi 
+			. Thêm HttpContext.Session.Clear(); vào Logout.cshtml.cs
 
+	- Tạo View Component
+		+ Tạo class ShoppingCartViewComponent 
+			. Trong func InvokeAsync() ta sẽ ra Id người dùng hiện tại. Nếu không có thì xóa 
+			Session còn trong LOGOUT sẽ không còn dòng code "HttpContext.Session.Clear();"
+		+ Phải tạo folder Components trong Views/Share 
+			. Tạo folder ShoppingCart rồi tạo Default.cshtml 
+			. Trong _layout.cshtml ta sẽ gọi @await Component.InvokeAsync("ShoppingCart") --> Nó sẽ
+			trả ra View chính là Default.cshtml
+
+	- Đăng nhập bằng Facebook(hoặc GG hay LinkedIn)
+		+ Đầu tiên ta cần tạo 1 ứng dụng mới trên Facebook Developer(https://developers.facebook.com/)
+		(https://developers.facebook.com/apps/579749481720878/add/)
+		+ Thêm Facebook App ID và Facebook App Secret vào appsettings.json)
+
+		+ Cài đặt Authentication.Facebook ở NuGet Package 
+		+ Thêm lệnh builder.Services.AddAuthentication().AddFacebook ở Program.cs
+		+ 
 
 
 
