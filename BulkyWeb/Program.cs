@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Bulky.Utility;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using System.Numerics;
+using Bulky.DataAccess.DbInitializer;
 
 namespace BulkyWeb
 {
@@ -72,7 +73,7 @@ namespace BulkyWeb
             // Mà tại program.cs chỉ hỗ trợ cho MVC nên ta phải đăng ký dịch vụ Razor :>>>>>>>>>> 
             builder.Services.AddRazorPages();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
+            builder.Services.AddScoped<IDbInitializer, DbInitializer>();
             builder.Services.AddScoped<IEmailSender, EmailSender>();
 
             var app = builder.Build();
@@ -95,6 +96,8 @@ namespace BulkyWeb
             app.UseAuthorization();
             app.UseSession();
 
+            SeedDatabase();
+
             // - app.MapRazorPages() ánh xạ các Razor Pages (.cshtml) thành các endpoint HTTP để ứng dụng xử lý
             // được các yêu cầu đến các tệp Razor Page.
             // - sử dụng app.MapRazorPages() nếu ứng dụng của bạn có sử dụng Razor Pages.
@@ -104,6 +107,15 @@ namespace BulkyWeb
                 pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
+
+            void SeedDatabase()
+            {
+                using(var scope = app.Services.CreateScope())
+                {
+                    var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+                    dbInitializer.Initialize();
+                }
+            }
         }
     }
 }

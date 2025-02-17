@@ -344,7 +344,15 @@
 
 		+ Cài đặt Authentication.Facebook ở NuGet Package 
 		+ Thêm lệnh builder.Services.AddAuthentication().AddFacebook ở Program.cs
-		+ 
+		
+
+25. Deployment and Email 
+	- Tạo folder DbInitializer rồi tạo DbInitializer.cs dùng để khởi tạo userAdmin khi deploy dự án  
+	    + Thêm hàm SeedDatabase() vào program.cs
+
+	- Tạo tài khoản trên SendGrid https://sendgrid.com/en-us
+	- Lấy khóa API Key và thêm vào Biến môi trường (hoặc appsettings.json)
+	- Thêm EmailSender vào BulkyBook.Utility
 
 
 
