@@ -355,8 +355,19 @@
 	- Thêm EmailSender vào BulkyBook.Utility
 
 
+26. User Management 
+	- Tạo thêm 1 controller dùng để quản lý user. Nút create và Manage User được đặt ở Content Management 
+		+ Tạo giống như companyController và View Index của companyController
+		+ Hiển thị Role của từng User lên khỏi bảng 
+			. Kết hợp 3 bảng AspNetUsers, AspNetRoles, AspNetUserRole lại với nhau để có thể lấy được Role 
+			. Sửa lại logic trong hàm GetAll() của UserController
+			. Thêm thuộc tính Role vào ApplicationUser 
+		+ Có chức năng KHÓA và MỞ KHÓA bất kì tài khoản nào 
+			. Khóa từ ngày nào tới ngày nào 
+			. Action sẽ được thực hiện trong user.js 
 
-
+	- Assignment 4 - User Role 
+		+ 
 
 
 

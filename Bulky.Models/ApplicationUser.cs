@@ -28,5 +28,7 @@ namespace Bulky.Models
                                               // property) để thiết lập mối quan hệ với thực thể Company 
                                               // - Cho phép truy cập thông tin chi tiết của thực thể Company
                                               // tương ứng với CompanyId mà không cần thực hiện thủ công một truy vấn khác
+        [NotMapped]
+        public string Role { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace Bulky.DataAccess.Data
         // Mỗi DbSet đại diện cho một bảng trong cơ sở dữ liệu và cung cấp khả năng truy vấn hoặc thao tác dữ liệu trong bảng đó
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Company> Company { get; set; }
+        public DbSet<Company> Companies { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<OrderHeader> OrderHeaders { get; set; }

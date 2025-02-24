@@ -36,7 +36,7 @@
                             <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">Manager Order</a>
                         </li>
 
-                        @if(User.IsInRole(SD.Role_Admin)) 
+                        @if ( User.IsInRole(SD.Role_Admin) ) 
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -55,6 +55,9 @@
                                     <li><hr class="dropdown-divider"></li>
                                     <li class="nav-item">
                                         <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Create User</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Index">Manage User</a>
                                     </li>
                                 </ul>
                             </li>
@@ -86,10 +89,15 @@
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js" asp-append-version="true"></script>
+    
     <script src="https://cdn.tiny.cloud/1/you5z8u3urzrm2iopvmee9ufjc1n8hx7byq2prdbtqhfzm8d/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
