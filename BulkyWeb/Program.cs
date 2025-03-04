@@ -58,6 +58,11 @@ namespace BulkyWeb
                 options.AppId = "579749481720878";
                 options.AppSecret = "01d48774f0a40240b81bcb59f2391cc8";
             });
+            builder.Services.AddAuthentication().AddMicrosoftAccount(options =>
+            {
+                options.ClientId = "7730662c-8d21-4539-bc43-4ceeac422a98";
+                options.ClientSecret = "9fb4fa31-3479-4a13-aa83-b68c64c70e71";
+            });
 
 
             builder.Services.AddDistributedMemoryCache();

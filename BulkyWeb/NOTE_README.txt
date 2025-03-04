@@ -366,19 +366,38 @@
 			. Khóa từ ngày nào tới ngày nào 
 			. Action sẽ được thực hiện trong user.js 
 
-	- Assignment 4 - User Role 
-		+ 
 
+27. Multiple Product Image
+	- Xóa folder Migration cũ, xóa ImageUrl trong Product.cs 
+	- Comment lại các dòng code chứa ImageUrl
+	- Xóa các trường giá trị của ImageUrl trong ApplicationDbContext.cs
+	- Đổi tên Database thành Database=BulkyNew trong appsettings.json
 
+	- Thêm 1 bảng mới ProductImages trong Folder Bulky.Models
+	- Thêm thuộc tính List<ProductImage> ProductImages vào Product
+	- Thêm DbSet<ProductImage> ProductImages vào ApplicationDbContext.cs
+	- add-migration addProductImageToDb
+	- update-database: lưu những thay đổi vào database
 
+	- Thêm ProductImage vào Repository và UnitOfWork
+	- Upload Images on Product Upsert 
+		+ Trong Upsert.cshtml sửa thành <input type="file" name="files" class="form-control border-0 shadow" multiple/>
+			. Name = "files" 
+			. Multiple để cho phép người dùng chọn nhiều file cùng 1 lúc
 
+	- Trước đây ảnh của tất cả sản phẩm được lưu tại wwwRoot\images\products, nhưng bây giờ ta muốn mỗi sản phẩm có nhiều 
+	ảnh. Để quản lý nhiều ảnh của từng sản phẩm tốt hơn thì ta sẽ tạo folder có tên là product-"Id của product đó" ở trong
+	wwwRoot\images\products
 
+	- Khi update product thì tất cả ảnh sẽ được hiển thị lên 
+	- Ta cần 1 chức năng Delete image
+		+ Có thể thêm 1 nút xóa bên dưới mỗi ảnh với asp-action="DeleteImage" 
+	- Khi xóa product thì những ảnh của product đó cũng sẽ bị xóa  
 
-
-
-
-
-
+	- Hiển thị tất cả ảnh của từng sản phẩm ở ShoppingCart, giao diện chính của trang web 
+	- Hiển thị ảnh tại 
+		+ Trang Details sử dụng Bootstrap Carousel
+		+ Trang Shopping Cart 
 
 
 
